@@ -1,4 +1,5 @@
 # Solana-Bootcamp-Final-Project
+Above is a NFT project for cryptographic puzzle . Intially we have a puzzle, and we will get an image once we have solved the puzzle and its description too . One can also request for hints if they dont get an idea!!!!
 # Solana NFT Project
 
 ## Connect to Devnet
@@ -17,6 +18,7 @@ After obtaining Devnet tokens, deploy the contract with the following command:
 ```bash
 solana program deploy target/deploy/nft.so
 ```
+now save the `YOUR_PROGRAM_ID`
 ## Install Node Modules
 Install the required node_modules dependencies by running:
 ```bash
