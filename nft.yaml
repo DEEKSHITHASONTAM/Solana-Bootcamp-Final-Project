@@ -1,0 +1,81 @@
+cidl: "0.8"
+info:
+  name: nft
+  title: DEEKSHITHA NFT
+  version: 0.0.1
+  license:
+    name: Unlicense
+    identifier: Unlicense
+types:
+  PuzzleMetadata:
+    solana:
+      seeds:
+        - name: "cryptopuzzle"
+        - name: mint
+          type: sol:pubkey
+    fields:
+      - name: puzzle
+        type: string
+        solana:
+          attributes: [ cap:16 ]
+      - name: description
+        type: string
+        solana:
+          attributes: [ cap:16 ]
+      - name: hint
+        type: string
+        solana:
+          attributes: [ cap:255 ]
+      - name: mint
+        type: sol:pubkey
+      - name: assoc_account
+        type: rs:option<sol:pubkey>
+methods:
+  - name: mint
+    uses:
+      - csl_spl_token.initialize_mint2
+      - csl_spl_assoc_token.create
+      - csl_spl_token.mint_to
+      - csl_spl_token.set_authority
+    inputs:
+      - name: mint
+        type: csl_spl_token.Mint
+        solana:
+          attributes: [ init ]
+      - name: cryptopuzzle
+        type: PuzzleMetadata
+        solana:
+          attributes: [ init ]
+          seeds:
+            mint: mint
+      - name: puzzle
+        type: string
+      - name: description
+        type: string
+      - name: hint
+        type: string
+  - name: transfer
+    uses:
+      - csl_spl_assoc_token.create
+      - csl_spl_token.transfer_checked
+    inputs:
+      - name: mint
+        type: csl_spl_token.Mint
+      - name: cryptopuzzle
+        type: PuzzleMetadata
+        solana:
+          attributes: [ mut ]
+          seeds:
+            mint: mint
+  - name: burn
+    uses:
+      - csl_spl_token.burn
+    inputS:
+      - name: mint
+        type: csl_spl_token.Mint
+      - name: puzzle_art
+        type: PuzzleMetadata
+        solana:
+          attributes: [ mut ]
+          seeds:
+            mint: mint
